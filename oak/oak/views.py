@@ -1,6 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from oak.models import Game
+from oak.serializers import GameSerializer
+
 
 class GameInitializationView(APIView):
     '''An API view to create a new Game object when a new game is initialised
@@ -8,14 +11,16 @@ class GameInitializationView(APIView):
     '''
     permission_classes = (
     )
+    serializer_class = GameSerializer
 
     http_method_names = ['get', ]
 
     def get(self, request, format=None):
 
-        resp = {'a': 'b'}
+        game = Game.objects.last()
+        serializer = GameSerializer(game)
 
-        return Response(resp)
+        return Response(serializer.data)
 
 
 class GameActionView(APIView):
