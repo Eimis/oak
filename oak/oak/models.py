@@ -15,6 +15,7 @@ class GameLog(models.Model):
         ('O', 'O'),
     )
 
+    # FIXME: use rows and columns?:
     from_field = models.CharField(max_length=1, choices=GAME_FIELD_CHOICES)
     to_field = models.CharField(max_length=1, choices=GAME_FIELD_CHOICES)
     player = models.CharField(max_length=1, choices=GAME_PLAYER_CHOICES)

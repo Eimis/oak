@@ -17,7 +17,8 @@ class GameInitializationView(APIView):
 
     def get(self, request, format=None):
 
-        game = Game.objects.last()
+        # game = Game.objects.last()
+        game = Game.objects.create()
         serializer = GameSerializer(game)
 
         return Response(serializer.data)
