@@ -9,3 +9,10 @@ class GameSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
         )
+
+
+class GameLogSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = oak_models.GameLog
+        fields = ('__all__')

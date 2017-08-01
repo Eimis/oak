@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from oak.models import Game
-from oak.serializers import GameSerializer
+from oak.models import Game, GameLog
+from oak.serializers import GameLogSerializer, GameSerializer
 
 
 class GameInitializationView(APIView):
@@ -29,6 +29,7 @@ class GameLogView(APIView):
     '''
     permission_classes = (
     )
+    serializer_class = GameLogSerializer
 
     http_method_names = ['post', ]
 
@@ -39,13 +40,19 @@ class GameLogView(APIView):
         player = request.data.get('player', None)
         game = request.data.get('game', None)
 
-        if not all([row, column, player, game]):
+        # we can't use all() here because 0's are False:
+        if row is None or column is None or player is None or game is None:
             return Response({
                 'error': ('Missing one of the required parameters: row, '
                           'column, player, and / or game')
             })
 
-        # TODO:
-        # only log if CORRECT player clicks
+        log = GameLog.objects.create(
+            to_row=row,
+            to_column=column,
+            player=player,
+            game=Game.objects.get(pk=game),
+        )
+        serializer = GameLogSerializer(log)
 
-        return Response({})
+        return Response(serializer.data)
