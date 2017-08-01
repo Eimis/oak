@@ -24,16 +24,28 @@ class GameInitializationView(APIView):
         return Response(serializer.data)
 
 
-class GameActionView(APIView):
+class GameLogView(APIView):
     '''An API view to log game action
     '''
     permission_classes = (
     )
 
-    http_method_names = ['get', ]
+    http_method_names = ['post', ]
 
-    def get(self, request, format=None):
+    def post(self, request, format=None):
 
-        resp = {'a': 'b'}
+        row = request.data.get('row', None)
+        column = request.data.get('column', None)
+        player = request.data.get('player', None)
+        game = request.data.get('game', None)
 
-        return Response(resp)
+        if not all([row, column, player, game]):
+            return Response({
+                'error': ('Missing one of the required parameters: row, '
+                          'column, player, and / or game')
+            })
+
+        # TODO:
+        # only log if CORRECT player clicks
+
+        return Response({})

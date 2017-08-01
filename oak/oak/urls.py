@@ -12,8 +12,8 @@ urlpatterns = [
         name='init_game'
     ),
     url(
-        r'^game/set-action$',
-        api_views.GameActionView.as_view(),
-        name='set_game_acion'
+        r'^game/log$',
+        api_views.GameLogView.as_view(),
+        name='log_game'
     ),
 ]
