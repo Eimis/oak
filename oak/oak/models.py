@@ -15,10 +15,19 @@ class GameLog(models.Model):
         ('1', '1'),
         ('2', '2'),
     )
+    GAME_ROW_CHOICES = (
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+    )
 
-    # FIXME: use rows and columns?:
+    added_on = models.DateTimeField(auto_now_add=True)
+
     from_column = models.CharField(max_length=1, choices=GAME_COLUMN_CHOICES)
     to_column = models.CharField(max_length=1, choices=GAME_COLUMN_CHOICES)
+
+    from_row = models.CharField(max_length=1, choices=GAME_ROW_CHOICES)
+    to_row = models.CharField(max_length=1, choices=GAME_ROW_CHOICES)
+
     player = models.CharField(max_length=1, choices=GAME_PLAYER_CHOICES)
-    added_on = models.DateTimeField(auto_now_add=True)
     game = models.ForeignKey(Game)
