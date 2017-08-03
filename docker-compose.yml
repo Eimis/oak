@@ -5,6 +5,7 @@ services:
     image: postgres
   web:
     image: oak
+    entrypoint: /entrypoint.sh
     build: .
     command: python3 oak/manage.py runserver 0.0.0.0:8000
     volumes:
@@ -13,8 +14,3 @@ services:
       - "8000:8000"
     depends_on:
       - db
-  migrations:
-    image: oak
-    command: python3 oak/manage.py migrate --noinput
-    volumes:
-      - .:/code
